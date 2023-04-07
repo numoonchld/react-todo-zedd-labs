@@ -1,5 +1,5 @@
 # notes
 
-In the project directory, you can run:
+In the project root directory, you can run:
 
-### `npm start`
+### `npm install && npm start`
