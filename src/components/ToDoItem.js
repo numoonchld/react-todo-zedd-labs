@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 function ToDoItem({ todoItem }) {
-    console.log({ todoItem })
 
     const [isEditing, setIsEditing] = useState(false)
     const [todoTitle, setTodoTitle] = useState(todoItem.title)
