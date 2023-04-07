@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { useAuthContext } from '../hooks/useAuthContext';
 
-function NewToDoForm() {
+function NewToDoForm({ setAllTodos }) {
+
+    const { user } = useAuthContext()
+
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -28,13 +32,15 @@ function NewToDoForm() {
             id: uuidv4(),
             title: title.trim(),
             description: description.trim(),
-            dueDate
+            dueDate,
+            user
         }
         const newTodos = [newTodo, ...existingTodos]
 
         localStorage.setItem('todos', JSON.stringify(newTodos))
 
-        window.location.reload()
+        // window.location.reload()
+        setAllTodos([newTodo, ...existingTodos])
 
     }
 

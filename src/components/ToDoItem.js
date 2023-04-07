@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { useAuthContext } from '../hooks/useAuthContext'
 
-function ToDoItem({ todoItem }) {
+function ToDoItem({ todoItem, setAllTodosGlobalState }) {
+    const { user } = useAuthContext()
+
 
     const [isEditing, setIsEditing] = useState(false)
     const [todoTitle, setTodoTitle] = useState(todoItem.title)
@@ -22,7 +25,8 @@ function ToDoItem({ todoItem }) {
             id: currentToDoID,
             title: todoTitle.trim(),
             description: todoDescription.trim(),
-            dueDate: todoDueDate
+            dueDate: todoDueDate,
+            user
         }
 
         const existingTodos = JSON.parse(localStorage.getItem('todos'))
@@ -30,7 +34,7 @@ function ToDoItem({ todoItem }) {
         newTodos = [updatedToDoItem, ...newTodos]
         localStorage.setItem('todos', JSON.stringify(newTodos))
 
-        window.location.reload()
+        setAllTodosGlobalState(newTodos)
 
     }
 
@@ -38,7 +42,7 @@ function ToDoItem({ todoItem }) {
         const existingTodos = JSON.parse(localStorage.getItem('todos'))
         const newTodos = existingTodos.filter(todo => todo.id !== todoItem.id)
         localStorage.setItem('todos', JSON.stringify(newTodos))
-        window.location.reload()
+        setAllTodosGlobalState(newTodos)
     }
 
     return (

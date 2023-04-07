@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ToDoItem from './ToDoItem'
 
 
-function ToDoList() {
+function ToDoList({ user, allTodosGlobalState, setAllTodosGlobalState }) {
 
     const [allTodos, setAllTodos] = useState([])
     const [filterTerm, setFilterTerm] = useState('')
@@ -45,7 +45,10 @@ function ToDoList() {
                 <input placeholder="filter to-dos" className='form-control mx-3' type='text' value={filterTerm} onChange={(e) => setFilterTerm(e.target.value)} />
                 <button className='btn btn-primary badge' onClick={onReset}>Reset</button>
             </div>
-            {allTodos.filter(todoItem => todoItem.title.includes(filterTerm) || todoItem.description.includes(filterTerm)).map(todoItem => <ToDoItem key={todoItem.id} todoItem={todoItem} />)}
+            {allTodosGlobalState
+                .filter(todoItem => todoItem.user === user && (todoItem.title.includes(filterTerm) || todoItem.description.includes(filterTerm)))
+                .map(todoItem => <ToDoItem key={todoItem.id} todoItem={todoItem} setAllTodosGlobalState={setAllTodosGlobalState} />)
+            }
         </section>
     )
 }
