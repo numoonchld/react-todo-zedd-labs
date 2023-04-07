@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useEffect } from 'react';
+import NewToDoForm from './components/NewToDoForm';
+import ToDoList from './components/ToDoList';
 
 function App() {
+
+  const initializeLocalStorage = async () => {
+
+    if (localStorage.getItem('todos') === null) {
+      localStorage.setItem('todos', JSON.stringify([]))
+
+    }
+  }
+
+  useEffect(() => {
+    initializeLocalStorage()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="container d-flex flex-column justify-content-center overflow-auto my-5"
+      style={{ minHeight: "90vh" }}
+    >
+      <NewToDoForm />
+      <hr />
+      <ToDoList />
     </div>
   );
 }
