@@ -38,6 +38,7 @@ function ToDoList({ user, allTodosGlobalState, setAllTodosGlobalState }) {
 
     const onReset = () => {
         setAllTodos(JSON.parse(localStorage.getItem('todos')))
+        setFilterTerm('')
     }
 
     return (
