@@ -4,7 +4,7 @@ import ToDoItem from './ToDoItem'
 
 function ToDoList({ user, allTodosGlobalState, setAllTodosGlobalState }) {
 
-    const [allTodos, setAllTodos] = useState([])
+    const [allTodos, setAllTodos] = useState(allTodosGlobalState)
     const [filterTerm, setFilterTerm] = useState('')
 
     const loadAllTodos = async () => {
@@ -14,6 +14,10 @@ function ToDoList({ user, allTodosGlobalState, setAllTodosGlobalState }) {
     useEffect(() => {
         loadAllTodos()
     }, [])
+
+    useEffect(() => {
+        setAllTodos(allTodosGlobalState)
+    }, [allTodosGlobalState])
 
 
     const epochFromDate = (date) => {
@@ -45,7 +49,7 @@ function ToDoList({ user, allTodosGlobalState, setAllTodosGlobalState }) {
                 <input placeholder="filter to-dos" className='form-control mx-3' type='text' value={filterTerm} onChange={(e) => setFilterTerm(e.target.value)} />
                 <button className='btn btn-primary badge' onClick={onReset}>Reset</button>
             </div>
-            {allTodosGlobalState
+            {allTodos
                 .filter(todoItem => todoItem.user === user && (todoItem.title.includes(filterTerm) || todoItem.description.includes(filterTerm)))
                 .map(todoItem => <ToDoItem key={todoItem.id} todoItem={todoItem} setAllTodosGlobalState={setAllTodosGlobalState} />)
             }
